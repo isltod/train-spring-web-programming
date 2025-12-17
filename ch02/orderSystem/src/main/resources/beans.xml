@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--
+       xmlns:context="http://www.springframework.org/schema/context"
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+  <context:component-scan base-package="com.mycompany.ordersystem"/>
+-->
+  <bean id="customerRepository" class="com.mycompany.ordersystem.CustomerRepositoryImpl" />
+  <bean id="customerService" class="com.mycompany.ordersystem.CustomerServiceImpl">
+<!--    <constructor-arg ref="customerService" />-->
+<!--    위 대신 아래처럼 setter로 지정 가능, ref는 이 xml에 지정한 이름, name은 클래스 속성 -->
+    <property name="customerRepository" ref="customerRepository" />
+  </bean>
+</beans>
