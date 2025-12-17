@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+// 이렇게 이름 달아준다고 바로 구분하는 건 아니구나...이름으로 구분하려면 뭔가 더 해야 하는 듯...
 @Repository("customerRepository")
 public class CustomerRepositoryImpl2 implements CustomerRepository {
     private List<Customer> customers;
