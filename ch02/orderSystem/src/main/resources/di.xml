@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <bean class="di.InjectedBean" id="injectedBean" />
+  <bean class="di.DependentBean" id="dependentBean">
+<!--    이건 생성자 주입 방식-->
+<!--    <constructor-arg ref="injectedBean" />-->
+<!--    이건 세터 주입 방식-->
+    <property name="injectedBean" ref="injectedBean" />
+  </bean>
+  <bean class="di.DIBean" id="diBean">
+    <property name="strField" value="주입된 값" />
+    <property name="listField">
+      <list>
+        <value>리스트 1</value>
+        <value>리스트 2</value>
+        <value>리스트 3</value>
+      </list>
+    </property>
+    <property name="setField">
+      <set>
+        <value>요소 1</value>
+        <value>요소 2</value>
+        <value>요소 3</value>
+        <value>요소 1</value>
+      </set>
+    </property>
+    <property name="mapField">
+      <map>
+        <entry key="키1" value="값1" />
+        <entry key="키2" value="값2" />
+        <entry key="키3" value="값3" />
+      </map>
+    </property>
+    <property name="propsField">
+      <props>
+        <prop key="속성1">속성값1</prop>
+        <prop key="속성2">속성값2</prop>
+        <prop key="속성3">속성값3</prop>
+      </props>
+    </property>
+    <property name="nullFiled">
+      <null />
+    </property>
+    <property name="spEL" value="#{'100' matches '\d+'}" />
+  </bean>
+</beans>
