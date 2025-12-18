@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+  <context:annotation-config />
+  <context:component-scan base-package="wiring" />
+<!--  <bean class="wiring.Bean1" id="bean1" />-->
+<!--  <bean class="wiring.Bean1" id="bean11" />-->
+<!--  Autowired 어노테이션을 달아놔서 property 태그로 다시 넣는 것을 안해도 된다...-->
+  <bean class="wiring.Bean2" id="bean2" />
+  <bean class="wiring.Bean3" id="bean3">
+    <constructor-arg ref="bean11" />
+  </bean>
+</beans>
