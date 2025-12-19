@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop.xsd">
+  <context:component-scan base-package="com.mycompany.ordersystem"/>
+  <bean id="loggingAspect" class="com.mycompany.ordersystem.aspect.LoggingAspect"/>
+  <aop:config>
+    <aop:aspect ref="loggingAspect">
+      <aop:pointcut id="getLogging"
+                    expression = "execution(* com.mycompany.ordersystem.*.*.*.get*(..)) ||
+			  					        execution(* com.mycompany.ordersystem.*.*.*.find*(..))"/>
+      <aop:pointcut id="saveLogging"
+                    expression="execution(* com.mycompany.ordersystem.*.*.*.save*(..))"/>
+      <aop:before method="logBefore" pointcut-ref="getLogging"/>
+      <aop:after method="logAfter" pointcut-ref="getLogging"/>
+      <aop:after-returning method="logAfterReturning" pointcut-ref="getLogging"/>
+      <aop:after-throwing method="logAfterThrowing" pointcut-ref="getLogging"/>
+      <aop:around method="logAround" pointcut-ref="saveLogging"/>
+    </aop:aspect>
+  </aop:config>
+<!--      <aop:aspectj-autoproxy/>-->
+</beans>
