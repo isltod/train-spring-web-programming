@@ -15,8 +15,8 @@ public class Main {
     static private InventoryUI inventoryUI = null;
     static private OrderUI orderUI = null;
     public static void main(String[] args) {
-        //ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        //ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         customerUI = context.getBean("customerUI", CustomerUI.class);
         productUI = context.getBean("productUI", ProductUI.class);
         inventoryUI = context.getBean("inventoryUI", InventoryUI.class);

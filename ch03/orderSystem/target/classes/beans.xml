@@ -23,7 +23,14 @@
       <aop:after-returning method="logAfterReturning" pointcut-ref="getLogging"/>
       <aop:after-throwing method="logAfterThrowing" pointcut-ref="getLogging"/>
       <aop:around method="logAround" pointcut-ref="saveLogging"/>
+      <aop:pointcut
+              id="updateLogging"
+              expression="execution(* com.mycompany.ordersystem.*.service.*.update*(
+              com.mycompany.ordersystem.domain.Customer)) and args(customer)"
+      />
+      <aop:before method="logBeforeUpdate" pointcut-ref="updateLogging" />
     </aop:aspect>
   </aop:config>
-<!--      <aop:aspectj-autoproxy/>-->
+<!--  이 위는 XML로만 할 때, 아래는 어노테이션 붙이고 자동 설정만 여기서...-->
+<!--  <aop:aspectj-autoproxy/>-->
 </beans>
