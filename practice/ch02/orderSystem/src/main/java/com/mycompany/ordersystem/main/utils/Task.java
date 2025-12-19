@@ -1,4 +1,4 @@
-package com.mycompany.ordersystem.utils;
+package com.mycompany.ordersystem.main.utils;
 
 public enum Task {
 

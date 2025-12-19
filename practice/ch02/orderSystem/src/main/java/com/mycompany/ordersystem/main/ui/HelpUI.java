@@ -1,6 +1,6 @@
 package com.mycompany.ordersystem.main.ui;
 
-import com.mycompany.ordersystem.utils.Task;
+import com.mycompany.ordersystem.main.utils.Task;
 
 public class HelpUI {
 
