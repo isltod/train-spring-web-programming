@@ -1,0 +1,106 @@
+package com.mycompany.ordersystem.main.ui;
+
+import com.mycompany.ordersystem.domain.Product;
+import com.mycompany.ordersystem.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Scanner;
+
+@Component("productUI")
+public class ProductUI {
+    private Scanner scanner;
+    private ProductService productService;
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+        scanner = new Scanner(System.in);
+    }
+
+    public void insertProduct() {
+        System.out.println("제품 정보를 입력하세요: ");
+        System.out.print("제품 ID: ");
+        long id = scanner.nextLong();
+        System.out.print("제품 이름: ");
+        String name = scanner.next();
+        System.out.print("제품 설명: ");
+        String description = scanner.next();
+        System.out.print("제품 가격: ");
+        long price = scanner.nextLong();
+        Product product = new Product();
+        product.setId(id);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        productService.saveProduct(product);
+    }
+
+    public void getProduct() {
+        System.out.print("제품 ID: ");
+        long id = scanner.nextLong();
+        Product product = productService.getProduct(id);
+        System.out.println(product);
+    }
+
+    public void getAllProducts() {
+        List<Product> productList = productService.getProducts();
+        for (Product product : productList) {
+            System.out.println(product);
+        }
+    }
+
+    public void updateProduct() {
+        System.out.print("제품 ID: ");
+        long id = scanner.nextLong();
+        Product old = productService.getProduct(id);
+        System.out.println(old);
+        System.out.println("변경 정보를 입력하세요: ");
+        System.out.print("제품 이름: ");
+        String name = scanner.next();
+        System.out.print("제품 설명: ");
+        String description = scanner.next();
+        System.out.print("제품 가격: ");
+        long price = scanner.nextLong();
+        Product product = new Product();
+        product.setId(id);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        productService.saveProduct(product);
+    }
+
+    public void deleteProduct() {
+        System.out.print("제품 ID: ");
+        long id = scanner.nextLong();
+        Product old = productService.getProduct(id);
+        System.out.println(old);
+        System.out.print("삭제하겠습니까? (Y: 예, N: 아니오): ");
+        String yesOrNo = scanner.next();
+        if(yesOrNo.toLowerCase().equals("y"))
+            productService.deleteProduct(id);
+    }
+
+    public void insertProductInfos() {
+        Product product = new Product();
+        product.setId(1);
+        product.setName("제품1");
+        product.setDescription("제품1설명 변경");
+        product.setPrice(10000);
+        productService.saveProduct(product);
+        product = new Product();
+        product.setId(2);
+        product.setName("제품2 변경");
+        product.setDescription("제품2설명");
+        product.setPrice(20000);
+        productService.saveProduct(product);
+        product = new Product();
+        product.setId(3);
+        product.setName("제품3");
+        product.setDescription("제품3설명");
+        product.setPrice(33000);
+        productService.saveProduct(product);
+        getAllProducts();
+    }
+}
