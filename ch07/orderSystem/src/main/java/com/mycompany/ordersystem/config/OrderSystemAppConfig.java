@@ -9,6 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -45,5 +47,11 @@ public class OrderSystemAppConfig implements WebMvcConfigurer {
         // registry.addConverter(new DateToStringTypeConverter());
         // 이건 너무 복잡한데...이렇게까지 해야 하나?
         // registry.addFormatterForFieldAnnotation(new DateFormatAnnotationFormatterFactory());
+    }
+
+    // 파일 업로드
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
     }
 }
