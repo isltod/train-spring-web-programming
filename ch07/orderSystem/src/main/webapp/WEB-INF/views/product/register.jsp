@@ -6,9 +6,15 @@
     <title>제품 정보 등록</title>
   </head>
   <body>
-    제품명: ${product.name} <br>
-    제품 설명: ${product.description} <br>
-    제품 가격: ${product.price}
+    <%-- 제품명: ${product.name} <br> --%>
+    <%-- 제품 설명: ${product.description} <br> --%>
+    <%-- 제품 가격: ${product.price} --%>
+    <%--   국제화 --%>
+      <spring:message code="product.info">
+        <spring:argument value="${product.name}"/>
+        <spring:argument value="${product.description}"/>
+        <spring:argument value="${product.price}"/>
+      </spring:message>
     <c:import url="/footer.jsp"/>
   </body>
 </html>
