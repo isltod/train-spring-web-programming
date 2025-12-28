@@ -33,7 +33,7 @@
           </c:forEach>
           <tr>
             <td>합계</td>
-            <td><fmt:formatNumber value="${item.total}" type="currency"/> 원</td>
+            <td><fmt:formatNumber value="${order.total}" type="currency"/> 원</td>
           </tr>
         </table>
       </c:otherwise>

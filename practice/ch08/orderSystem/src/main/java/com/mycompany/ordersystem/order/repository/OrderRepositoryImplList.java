@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("orderRepository")
+// @Repository("orderRepository")
 public class OrderRepositoryImplList implements OrderRepository {
     private List<Order> orders;
 
