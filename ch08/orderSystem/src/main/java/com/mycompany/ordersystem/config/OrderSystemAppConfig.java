@@ -4,15 +4,23 @@ import com.mycompany.ordersystem.converter.DateFormatAnnotationFormatterFactory;
 import com.mycompany.ordersystem.converter.DateToStringTypeConverter;
 import com.mycompany.ordersystem.converter.StringToDateTypeConverter;
 import com.mycompany.ordersystem.views.PdfProductReport;
+import jakarta.validation.Valid;
 import org.jspecify.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
@@ -26,12 +34,14 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.Locale;
 
-@EnableWebMvc
-@ComponentScan("com.mycompany.ordersystem")
 @Configuration
+@EnableWebMvc
 @PropertySource("classpath:application.properties")
+@ComponentScan("com.mycompany.ordersystem")
 public class OrderSystemAppConfig implements WebMvcConfigurer {
     // 일단 JSP 사용...
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -39,11 +49,8 @@ public class OrderSystemAppConfig implements WebMvcConfigurer {
         registry.jsp("/WEB-INF/views/", ".jsp");
     }
 
-    @Value("${spring.datasource.driver-class-name}")
-    private String driver;
     // 정적 HTML 파일 등의 위치를 지정하는 거라고...
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println(driver + "------------------------------------------------------------");
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/styles/**").addResourceLocations("/WEB-INF/styles/");
     }
@@ -109,5 +116,44 @@ public class OrderSystemAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+    }
+
+    // 데이터 연결 부분
+    // 이게 있어야 밑에 @Value 어노테이션이 작동하는 모양인데...
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String driver;
+    @Value("${spring.datasource.url}")
+    private String url;
+    @Value("${spring.datasource.username}")
+    private String username;
+    @Value("${spring.datasource.password}")
+    private String password;
+
+    @Autowired
+    private Environment env;
+
+    @Bean
+    public DataSource dataSource() throws IOException {
+        System.out.println(driver + "----------------------------------------------------------");
+        // 요건 @Value 작동 안해서 application.properties 실제 경로 찾아본 코드
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:application.properties");
+        System.out.println("resource = " + resource.exists());
+        System.out.println("resource.getFilename() = " + resource.getURI().toString());
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        // dataSource.setDriverClassName(driver);
+        // dataSource.setUrl(url);
+        // dataSource.setUsername(username);
+        // dataSource.setPassword(password);
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        return dataSource;
     }
 }

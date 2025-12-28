@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -13,35 +15,45 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-@EnableWebMvc
-// @ComponentScan("com.mycompany.ordersystem.controller")
-// 위처럼 쓰면 간단하긴 한데, 패키지 경로로 고정되서 아래가 더 유연할 것 같긴 하다...
-@ComponentScan(basePackages = {"com.mycompany.ordersystem"},
-               useDefaultFilters = false,
-               includeFilters = {@ComponentScan.Filter(Controller.class)})
+import javax.sql.DataSource;
+
 @Configuration
+@EnableWebMvc
 @PropertySource("classpath:application.properties")
+@ComponentScan("com.mycompany.ordersystem")
 public class OrderSystemAppConfig implements WebMvcConfigurer {
+    // 일단 JSP 사용...
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp("/WEB-INF/views/", ".jsp");
     }
 
-    // 위에 거나 아래 거나 둘 중 하나를 하면 되는데...
-    // @Bean
-    // public ViewResolver viewResolver() {
-    //     InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-    //     viewResolver.setPrefix("/WEB-INF/views/");
-    //     viewResolver.setSuffix(".jsp");
-    //     return viewResolver;
-    // }
-
-    @Value("${spring.datasource.driver-class-name}")
-    private String driver;
-
     // 정적 HTML 파일 등의 위치를 지정하는 거라고...
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println(driver + "-----------------------------------------------------------");
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/styles/**").addResourceLocations("/WEB-INF/styles/");
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Value("${datasource.driver}")
+    private String driver;
+    @Value("${datasource.url}")
+    private String url;
+    @Value("${datasource.username}")
+    private String username;
+    @Value("${datasource.password}")
+    private String password;
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
     }
 }
