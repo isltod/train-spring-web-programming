@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Repository("inventoryRepository")
+// @Repository("inventoryRepository")
 public class InventoryRepositoryImplList implements InventoryRepository {
     private Map<Long, Long> inventories;
 

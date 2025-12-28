@@ -15,6 +15,7 @@ import java.util.List;
 public class ProductRepositorySpringJDBC implements ProductRepository {
 
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     public ProductRepositorySpringJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
