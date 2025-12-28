@@ -4,6 +4,7 @@ import com.mycompany.ordersystem.domain.Product;
 import com.mycompany.ordersystem.services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,11 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping(value = "/product")
 public class ProductController {
 
+    @Autowired
+    private MessageSource messageSource;
     private ProductService productService;
     @Autowired
     public ProductController(ProductService productService) {
@@ -38,7 +42,7 @@ public class ProductController {
     public String list(Model model) {
         List<Product> products = productService.getProducts();
         model.addAttribute("products", products);
-        return "product/list";
+        return "pdfProductReport";
     }
 
     @GetMapping(path = "/update")
@@ -54,7 +58,8 @@ public class ProductController {
             // 이게 실제 파일
             @RequestParam(name = "image", required = false) MultipartFile image,
             // 이건 경로를 위해 사용한다고?
-            HttpServletRequest request
+            HttpServletRequest request,
+            Locale locale
     ) {
         if (result.hasErrors()) {
             // 일단 기본적으로 에러 뜨면 제자리로 돌려보내고
@@ -77,6 +82,10 @@ public class ProductController {
             result.reject(e.getMessage());
             return "product/edit";
         }
+        String message = messageSource.getMessage("product.info",
+                new Object[] {product.getName(), product.getDescription(), product.getPrice()},
+                locale);
+        System.out.println(message);
         productService.saveProduct(product);
         return "product/register";
     }
