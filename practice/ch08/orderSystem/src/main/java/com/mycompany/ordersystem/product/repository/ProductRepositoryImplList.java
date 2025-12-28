@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("productRepository")
+// @Repository("productRepository")
 public class ProductRepositoryImplList implements ProductRepository {
     private List<Product> products;
 
