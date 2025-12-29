@@ -1,10 +1,20 @@
 package com.mycompany.ordersystem.domain;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "inventory")
 public class Inventory {
+    @Id
+    @Column(name = "product_id")
     private long id;
+    @Transient
     private String name;
+    @Transient
     private long price;
+    @Column(name = "inventory_quantity")
     private long quantity;
+    @Transient
     private long stock;
 
     public long getId() {

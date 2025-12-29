@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("inventoryService")
+// @Service("inventoryService")
 public class InventoryServiceImpl implements InventoryService {
     private InventoryRepository inventoryRepository;
     private ProductService productService;

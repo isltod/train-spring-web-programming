@@ -1,24 +1,28 @@
 package com.mycompany.ordersystem.product.service;
 
 import com.mycompany.ordersystem.domain.Product;
-import com.mycompany.ordersystem.product.repository.ProductRepository;
+import com.mycompany.ordersystem.product.repository.ProductRepositorySpringDataJpa;
 import com.mycompany.ordersystem.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-// @Service("productService")
-public class ProductServiceImpl implements ProductService {
-    private ProductRepository productRepository;
+@Service("productService")
+public class ProductServiceSpringDataJpa implements ProductService {
+
+    private ProductRepositorySpringDataJpa productRepository;
+
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceSpringDataJpa(ProductRepositorySpringDataJpa productRepository) {
         this.productRepository = productRepository;
     }
+
     @Override
     public Product getProduct(long id) {
-        return productRepository.findById(id);
+        Optional<Product> product = productRepository.findById(id);
+        return product.orElse(null);
     }
 
     @Override
@@ -33,8 +37,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(long id) {
-        Product prod = getProduct(id);
-        if(prod != null)
-            productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 }

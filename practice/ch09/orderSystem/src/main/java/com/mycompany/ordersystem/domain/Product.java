@@ -1,10 +1,19 @@
 package com.mycompany.ordersystem.domain;
 
-public class Product {
-    private long id;
-    private String name;
-    private String description;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "product")
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private long id;
+    @Column(name = "product_name")
+    private String name;
+    @Column(name = "product_description")
+    private String description;
+    @Column(name = "product_price")
     private long price;
 
     public long getId() {
