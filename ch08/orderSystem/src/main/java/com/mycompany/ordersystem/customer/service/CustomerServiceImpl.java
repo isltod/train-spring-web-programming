@@ -1,7 +1,7 @@
 package com.mycompany.ordersystem.customer.service;
 
 import com.mycompany.ordersystem.services.CustomerService;
-import com.mycompany.ordersystem.customer.respository.CustomerRepository;
+import com.mycompany.ordersystem.services.CustomerRepository;
 import com.mycompany.ordersystem.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -5,14 +5,10 @@ import com.mycompany.ordersystem.converter.DateToStringTypeConverter;
 import com.mycompany.ordersystem.converter.StringToDateTypeConverter;
 import com.mycompany.ordersystem.views.PdfProductReport;
 import jakarta.validation.Valid;
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
@@ -21,8 +17,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -42,6 +41,8 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
+// @Import(TransactionConfig.class)
+@EnableTransactionManagement
 @ComponentScan("com.mycompany.ordersystem")
 public class OrderSystemAppConfig implements WebMvcConfigurer {
     // 일단 JSP 사용...
@@ -77,27 +78,27 @@ public class OrderSystemAppConfig implements WebMvcConfigurer {
     }
 
     // 국제화
-    @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        // 실제 서버에서는 -1로 캐시를 영속적으로 가진다고...
-        messageSource.setCacheSeconds(1);
-        messageSource.setBasenames("classpath:message", "classpath:validation");
-        return messageSource;
-    }
+    // @Bean
+    // public MessageSource messageSource() {
+    //     ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    //     // 실제 서버에서는 -1로 캐시를 영속적으로 가진다고...
+    //     messageSource.setCacheSeconds(1);
+    //     messageSource.setBasenames("classpath:message", "classpath:validation");
+    //     return messageSource;
+    // }
 
     // 아래 두 개는 검증 메시지 국제화
-    @Bean
-    public Validator validator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setValidationMessageSource(messageSource());
-        return validator;
-    }
+    // @Bean
+    // public Validator validator() {
+    //     LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+    //     validator.setValidationMessageSource(messageSource());
+    //     return validator;
+    // }
 
-    @Override
-    public @Nullable Validator getValidator() {
-        return validator();
-    }
+    // @Override
+    // public @Nullable Validator getValidator() {
+    //     return validator();
+    // }
 
     // 아래 세 개는 클라이언트 로케일 반응 관련
     @Bean
@@ -163,5 +164,19 @@ public class OrderSystemAppConfig implements WebMvcConfigurer {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
+    }
+
+    @Bean
+    public DataSourceTransactionManager transactionManager() throws IOException {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource());
+        return transactionManager;
+    }
+
+    @Bean
+    public TransactionTemplate transactionTemplate() throws IOException {
+        TransactionTemplate transactionTemplate = new TransactionTemplate();
+        transactionTemplate.setTransactionManager(transactionManager());
+        return transactionTemplate;
     }
 }

@@ -1,18 +1,21 @@
 package com.mycompany.ordersystem.product.repository;
 
 import com.mycompany.ordersystem.domain.Product;
+import com.mycompany.ordersystem.services.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository("productRepository")
-public class ProductRepositorySpringJDBC implements ProductRepository{
+@Transactional(propagation = Propagation.SUPPORTS, readOnly=true)
+public class ProductRepositorySpringJDBC implements ProductRepository {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -66,6 +69,10 @@ public class ProductRepositorySpringJDBC implements ProductRepository{
 
     @Override
     public void delete(long id) {
+        // Product product = findById(id);
+        // if (product.getName().equals("제품3")) {
+        //     throw new RuntimeException();
+        // }
         String sql = "DELETE FROM product WHERE product_id=?";
         jdbcTemplate.update(sql, id);
     }

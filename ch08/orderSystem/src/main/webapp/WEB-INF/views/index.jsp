@@ -18,6 +18,7 @@
       <a href="/product/list?lang=ko">제품 정보 조회</a><br>
       <a href="/product/list?lang=en">Product List</a><br>
       <a href="/inventory/list">재고 정보 조회</a><br>
+      <a href="/product/deleteAll">제품 전체 삭제</a><br>
     </p>
     <p>
       <h2>주문 관리</h2>

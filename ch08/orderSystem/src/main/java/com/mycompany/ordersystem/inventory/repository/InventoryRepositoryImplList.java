@@ -2,7 +2,7 @@ package com.mycompany.ordersystem.inventory.repository;
 
 import com.mycompany.ordersystem.domain.Product;
 import com.mycompany.ordersystem.product.repository.ProductRepositoryImplList;
-import com.mycompany.ordersystem.product.service.ProductServiceImpl;
+import com.mycompany.ordersystem.services.InventoryRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

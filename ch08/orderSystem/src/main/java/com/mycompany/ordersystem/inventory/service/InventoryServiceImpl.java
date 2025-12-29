@@ -2,7 +2,7 @@ package com.mycompany.ordersystem.inventory.service;
 
 import com.mycompany.ordersystem.domain.Inventory;
 import com.mycompany.ordersystem.domain.Product;
-import com.mycompany.ordersystem.inventory.repository.InventoryRepository;
+import com.mycompany.ordersystem.services.InventoryRepository;
 import com.mycompany.ordersystem.services.InventoryService;
 import com.mycompany.ordersystem.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

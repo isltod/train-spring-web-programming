@@ -3,6 +3,7 @@ package com.mycompany.ordersystem.order.repository;
 
 import com.mycompany.ordersystem.domain.Customer;
 import com.mycompany.ordersystem.domain.Order;
+import com.mycompany.ordersystem.services.OrderRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

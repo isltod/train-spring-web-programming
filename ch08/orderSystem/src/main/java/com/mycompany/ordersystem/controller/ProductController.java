@@ -42,7 +42,7 @@ public class ProductController {
     public String list(Model model) {
         List<Product> products = productService.getProducts();
         model.addAttribute("products", products);
-        return "pdfProductReport";
+        return "product/list";
     }
 
     @GetMapping(path = "/update")
@@ -100,6 +100,15 @@ public class ProductController {
     @PostMapping(path = "/delete")
     public String remove(@RequestParam("id") long id) {
         productService.deleteProduct(id);
+        return "redirect:/";
+    }
+
+    @GetMapping(path = "/deleteAll")
+    public String deleteAll() {
+        try {
+            productService.deleteProduct(0);
+        } catch (Exception e) {
+        }
         return "redirect:/";
     }
 }
