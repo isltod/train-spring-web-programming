@@ -3,7 +3,7 @@ package com.mycompany.ordersystem.order.service;
 import com.mycompany.ordersystem.domain.Customer;
 import com.mycompany.ordersystem.domain.Order;
 import com.mycompany.ordersystem.domain.OrderItem;
-import com.mycompany.ordersystem.order.repository.OrderRepository;
+import com.mycompany.ordersystem.services.OrderRepository;
 import com.mycompany.ordersystem.services.InventoryService;
 import com.mycompany.ordersystem.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

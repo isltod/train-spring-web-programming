@@ -1,7 +1,7 @@
 package com.mycompany.ordersystem.product.repository;
 
 import com.mycompany.ordersystem.domain.Product;
-import org.springframework.stereotype.Repository;
+import com.mycompany.ordersystem.services.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;

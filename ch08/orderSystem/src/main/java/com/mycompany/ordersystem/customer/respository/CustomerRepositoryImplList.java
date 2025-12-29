@@ -1,13 +1,13 @@
 package com.mycompany.ordersystem.customer.respository;
 
 import com.mycompany.ordersystem.domain.Customer;
-import org.springframework.stereotype.Repository;
+import com.mycompany.ordersystem.services.CustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // @Repository("customerRepository")
-public class CustomerRepositoryImplList implements CustomerRepository{
+public class CustomerRepositoryImplList implements CustomerRepository {
     private List<Customer> customers;
 
     public CustomerRepositoryImplList() {

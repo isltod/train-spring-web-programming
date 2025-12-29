@@ -1,6 +1,4 @@
-package com.mycompany.ordersystem.inventory.repository;
-
-import java.util.Optional;
+package com.mycompany.ordersystem.services;
 
 public interface InventoryRepository {
     long findById(long id);

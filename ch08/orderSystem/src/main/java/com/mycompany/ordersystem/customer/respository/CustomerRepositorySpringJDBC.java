@@ -1,6 +1,7 @@
 package com.mycompany.ordersystem.customer.respository;
 
 import com.mycompany.ordersystem.domain.Customer;
+import com.mycompany.ordersystem.services.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
