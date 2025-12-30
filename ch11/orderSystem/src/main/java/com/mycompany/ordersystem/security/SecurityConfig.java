@@ -5,11 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -37,15 +41,17 @@ public class SecurityConfig {
                 )
                 // .httpBasic(Customizer.withDefaults()) // 기본 경고창으로 로그인
                 .formLogin(formLogin -> formLogin
-                        // 이렇게 해서 어떻게든 기본 폼 로그인 되고...
+                //         // 이렇게 해서 어떻게든 기본 폼 로그인 되고...
                         .defaultSuccessUrl("/", true)
-                        // 로그인 페이지 따로 지정
-                        .loginPage("/login").permitAll()
+                //         // 로그인 페이지 따로 지정
+                //         .loginPage("/login")
+                        .permitAll()
                 )
                 // 이걸 하고 jsp에서 remember-me 체크박스를 쓰면 쿠키에 2주간 저장된다?
                 .rememberMe(Customizer.withDefaults())
                 // .and 안 붙여도 되고, 일단 기본형도 달라졌고...
                 .logout(logout -> logout.logoutSuccessUrl("/"))
+                .oauth2Login(Customizer.withDefaults())
         ;
         return http.build();
     }
@@ -66,4 +72,18 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // @Bean
+    // public ClientRegistrationRepository clientRegistrationRepository() {
+    //     return new InMemoryClientRegistrationRepository(githubClientRegistration());
+    // }
+    //
+    // @Bean
+    // public ClientRegistration githubClientRegistration() {
+    //     return CommonOAuth2Provider.GITHUB
+    //             .getBuilder("github")
+    //             .clientId("Ov23liz4toWP2xaD1VkB")
+    //             .clientSecret("8aef58e9a9e54190ba1ee62187e6a5cbe27da77b")
+    //             .build();
+    // }
 }
