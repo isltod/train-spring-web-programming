@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("orderService")
+// @Service("orderService")
 public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     private InventoryService inventoryService;
