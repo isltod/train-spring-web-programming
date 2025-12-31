@@ -43,17 +43,9 @@
       <artifactId>spring-boot-starter-webmvc</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-taglibs</artifactId>
-      <version>7.0.2</version>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>4.0.1</version>
     </dependency>
 
     <!-- JSP 및 서블릿 관련 라이브러리 -->

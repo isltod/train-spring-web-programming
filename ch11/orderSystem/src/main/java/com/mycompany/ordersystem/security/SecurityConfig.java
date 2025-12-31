@@ -3,6 +3,7 @@ package com.mycompany.ordersystem.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
@@ -18,7 +19,10 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+// 이건 아래 requestMatchers - URL 보안
 @EnableWebSecurity
+// 이건 메서드 보안인데, 활성은 여기서 시키고 실제 보안은 각 클래스와 메서드 별로 찾아가서 설정...복잡하네...
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -52,6 +56,10 @@ public class SecurityConfig {
                 // .and 안 붙여도 되고, 일단 기본형도 달라졌고...
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .oauth2Login(Customizer.withDefaults())
+                // 요청이 거절되면 보내는 페이지 설정
+                .exceptionHandling(
+                        handler -> handler.accessDeniedPage("/access_denied")
+                )
         ;
         return http.build();
     }

@@ -7,7 +7,6 @@ import com.mycompany.ordersystem.domain.Product;
 import com.mycompany.ordersystem.services.CustomerService;
 import com.mycompany.ordersystem.services.OrderService;
 import com.mycompany.ordersystem.services.ProductService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +19,6 @@ import java.util.List;
 @Controller
 @SessionAttributes({"order", "customer", "products", "orders"})
 @RequestMapping(value = "/order")
-// 이건 jsr250
-@RolesAllowed("ADMIN")
 public class OrderController {
 
     private CustomerService customerService;

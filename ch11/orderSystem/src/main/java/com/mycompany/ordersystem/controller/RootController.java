@@ -37,4 +37,9 @@ public class RootController {
         memberService.saveMember(member);
         return "index";
     }
+
+    @GetMapping(path = "/access_denied")
+    public String accessDenied() {
+        return "access_denied";
+    }
 }
