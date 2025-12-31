@@ -3,7 +3,6 @@ package com.mycompany.ordersystem.controller;
 import com.mycompany.ordersystem.domain.Product;
 import com.mycompany.ordersystem.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/product")
-// Config에서 @EnableMethodSecurity(prePostEnabled = true) 활성한 걸 여기서 설정...일단 기본 수준은 거부
-@PreAuthorize("denyAll()")
 public class ProductController {
 
     private ProductService productService;
@@ -26,8 +23,6 @@ public class ProductController {
     }
 
     @GetMapping(path = "/edit")
-    // ADMIN 역할에만 허용
-    @PreAuthorize("hasRole('ADMIN')")
     public String create(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
@@ -35,8 +30,6 @@ public class ProductController {
     }
 
     @GetMapping(path = "/list")
-    // USER 와 ADMIN 역할에 허용...
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public String list(Model model) {
         List<Product> products = productService.getProducts();
         model.addAttribute("products", products);
@@ -44,7 +37,6 @@ public class ProductController {
     }
 
     @GetMapping(path = "/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public String update(Model model, @RequestParam("id")  long id) {
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
@@ -52,14 +44,12 @@ public class ProductController {
     }
 
     @PostMapping(path = {"/edit", "/update"})
-    @PreAuthorize("hasRole('ADMIN')")
     public String save(Product product) {
         productService.saveProduct(product);
         return "redirect:/";
     }
 
     @GetMapping(path = "/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public String delete(Model model, @RequestParam("id")  long id) {
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
@@ -67,7 +57,6 @@ public class ProductController {
     }
 
     @PostMapping(path = "/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public String remove(@RequestParam("id") long id) {
         productService.deleteProduct(id);
         return "redirect:/";

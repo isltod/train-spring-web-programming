@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
   <head>
     <title>주문 관리 시스템</title>
@@ -7,17 +8,29 @@
   <body>
     <%-- 이건 작동 안하고... --%>
     <%-- <a href="/logout">로그 아웃</a> --%>
-    <form:form action="/logout" method="post">
-      <input type="submit" value="로그 아웃">
-    </form:form>
+      <security:authorize access="isAuthenticated()">
+        <security:authentication property="principal.username"/>(으)로 로그인 되었습니다.<br>
+        <form:form action="/logout" method="post">
+          <input type="submit" value="로그 아웃">
+        </form:form>
+      </security:authorize>
     <h1>주문 관리 시스템</h1>
+      <security:authorize access="isAnonymous()">
+        <form action="/login" method="post">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          <label>ID: </label>
+          <input type="text" name="username">&nbsp
+          <label>PW: </label>
+          <input type="password" name="password">&nbsp
+          <input type="submit" value="로그인">
+        </form>
+      </security:authorize>
     <p>
     <h2>회원 관리</h2>
-      <form:form action="/enroll" method="get">
-        <input type="submit" value="회원 등록">
-      </form:form>
     <a href="/enroll">회원 등록</a><br>
-    <a href="/enrolladmin">관리자 등록</a>
+      <security:authorize access="hasRole('ADMIN')">
+        <a href="/enrolladmin">관리자 등록</a>
+      </security:authorize>
     </p>
     <p>
     <h2>고객 정보 관리</h2>

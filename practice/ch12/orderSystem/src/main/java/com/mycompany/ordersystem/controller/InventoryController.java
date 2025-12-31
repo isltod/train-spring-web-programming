@@ -3,7 +3,6 @@ package com.mycompany.ordersystem.controller;
 import com.mycompany.ordersystem.domain.Inventory;
 import com.mycompany.ordersystem.services.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/inventory")
-@Secured("ROLE_ADMIN")
 public class InventoryController {
 
     private InventoryService inventoryService;

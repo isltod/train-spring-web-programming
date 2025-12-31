@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+    <typeAlias type="com.mycompany.ordersystem.domain.Customer" alias="Customer"/>
+    <typeAlias type="com.mycompany.ordersystem.domain.Inventory" alias="Inventory"/>
+    <typeAlias type="com.mycompany.ordersystem.domain.OrderItem" alias="OrderItem"/>
+    <typeAlias type="com.mycompany.ordersystem.domain.Order" alias="Order"/>
+    <typeAlias type="com.mycompany.ordersystem.domain.Product" alias="Product"/>
+  </typeAliases>
+</configuration>

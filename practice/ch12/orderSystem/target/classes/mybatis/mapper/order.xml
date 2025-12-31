@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.ordersystem.order.repository.OrderRepository">
+  <resultMap id="orderResult" type="Order">
+    <id property="id" column="order_id"/>
+    <result property="date" column="order_date"/>
+    <association property="customer" column="customer_id"
+                 select="com.mycompany.ordersystem.customer.respository.CustomerRepository.findById"/>
+    <collection property="items" column="order_id"
+                select="com.mycompany.ordersystem.order.repository.OrderItemRepository.findAll"/>
+  </resultMap>
+  <!-- <select id="findAll" parameterType="long" resultMap="orderResult"> -->
+  <!--   SELECT * FROM orders WHERE customer_id = #{id} -->
+  <!-- </select> -->
+  <select id="findById" parameterType="long" resultMap="orderResult">
+    SELECT * FROM orders WHERE order_id = #{id}
+  </select>
+  <!-- <insert id="save" parameterType="Order" useGeneratedKeys="true" keyProperty="id" keyColumn="order_id"> -->
+  <!--   INSERT INTO orders(customer_id) VALUES (#{customer.id}) -->
+  <!-- </insert> -->
+  <delete id="delete" parameterType="long">
+    DELETE FROM orders WHERE order_id = #{id}
+  </delete>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.ordersystem.customer.respository.CustomerRepository">
+  <!-- <select id="findAll" resultType="Customer"> -->
+  <!--   SELECT customer_id AS id, -->
+  <!--          customer_name AS name, -->
+  <!--          customer_address AS address, -->
+  <!--          customer_email AS email -->
+  <!--   FROM customer -->
+  <!--   ORDER BY customer_name -->
+  <!-- </select> -->
+  <resultMap id="customerResult" type="Customer">
+    <id property="id" column="customer_id"/>
+    <result property="name" column="customer_name"/>
+    <result property="address" column="customer_address"/>
+    <result property="email" column="customer_email"/>
+  </resultMap>
+  <!-- <select id="findById" parameterType="long" resultMap="customerResult"> -->
+  <!--   SELECT * FROM customer WHERE customer_id = #{id} -->
+  <!-- </select> -->
+  <!-- <select id="findByName" parameterType="String" resultMap="customerResult"> -->
+  <!--   SELECT * FROM customer WHERE customer_name = #{name} -->
+  <!-- </select> -->
+  <!-- <insert id="save" parameterType="Customer"> -->
+  <!--   INSERT INTO customer(customer_name, customer_address, customer_email) VALUES (#{name}, #{address}, #{email}) -->
+  <!-- </insert> -->
+  <!-- <update id="update" parameterType="Customer"> -->
+  <!--   UPDATE customer -->
+  <!--   SET customer_name = #{name}, customer_address = #{address}, customer_email = #{email} -->
+  <!--   WHERE customer_id = #{id} -->
+  <!-- </update> -->
+  <!-- <delete id="delete" parameterType="long"> -->
+  <!--   DELETE FROM customer WHERE customer_id = #{id} -->
+  <!-- </delete> -->
+</mapper>
